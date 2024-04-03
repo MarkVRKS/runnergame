@@ -1,7 +1,4 @@
 import pygame
-#from moviepy.editor import VideoFileClip
-
-image_path = '/data/data/com.runandpudge.rap/files/app/'
 
 #Создаём таймер, контролирующий кол-во телодвижений
 clock = pygame.time.Clock()
@@ -11,49 +8,45 @@ pygame.init()
 screen = pygame.display.set_mode((450, 225))
 #screen = pygame.display.set_mode((626, 357), flags=pygame.NOFRAME) - Убрать рамки у приложения
 pygame.display.set_caption('eqnq game')
-#Выводимые изображения и песенки + .convert_alpha() для конвертации изображений
-tnt = pygame.image.load(image_path + 'images/tnt.png').convert_alpha()
+#Выводимые изображения и песенки
+tnt = pygame.image.load('images/tnt.png')
 pygame.display.set_icon(tnt)
-background = pygame.image.load(image_path + 'images/backgr.jpg').convert_alpha()
+background = pygame.image.load('images/backgr.jpg')
 
-blackmem = pygame.image.load(image_path + 'images/blackmeme.jpg').convert_alpha()
-
-eye = pygame.image.load(image_path + 'images/eye.png').convert_alpha()
+eye = pygame.image.load('images/eye.png').convert_alpha()
 eye_list = []
-
-missle_pudge = pygame.image.load(image_path + 'images/missle_pudge.png').convert_alpha()
-missles = []
-missles_left = 5
-
 eye_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(eye_timer, 2500)
 
+missle_pudge = pygame.image.load('images/missle_pudge.png').convert_alpha()
+missles = []
+missles_left = 5
+
 walk_right = [
-    pygame.image.load(image_path + 'images/right_run/right_run_1.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/right_run/right_run_2.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/right_run/right_run_3.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/right_run/right_run_4.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/right_run/right_run_5.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/right_run/right_run_6.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/right_run/right_run_7.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/right_run/right_run_8.png').convert_alpha()
+    pygame.image.load('images/right_run/right_run_1.png'),
+    pygame.image.load('images/right_run/right_run_2.png'),
+    pygame.image.load('images/right_run/right_run_3.png'),
+    pygame.image.load('images/right_run/right_run_4.png'),
+    pygame.image.load('images/right_run/right_run_5.png'),
+    pygame.image.load('images/right_run/right_run_6.png'),
+    pygame.image.load('images/right_run/right_run_7.png'),
+    pygame.image.load('images/right_run/right_run_8.png')
 ]
 walk_left = [
-    pygame.image.load(image_path + 'images/left_run/left_run_1.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/left_run/left_run_2.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/left_run/left_run_3.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/left_run/left_run_4.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/left_run/left_run_5.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/left_run/left_run_6.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/left_run/left_run_7.png').convert_alpha(),
-    pygame.image.load(image_path + 'images/left_run/left_run_8.png').convert_alpha()
+    pygame.image.load('images/left_run/left_run_1.png'),
+    pygame.image.load('images/left_run/left_run_2.png'),
+    pygame.image.load('images/left_run/left_run_3.png'),
+    pygame.image.load('images/left_run/left_run_4.png'),
+    pygame.image.load('images/left_run/left_run_5.png'),
+    pygame.image.load('images/left_run/left_run_6.png'),
+    pygame.image.load('images/left_run/left_run_7.png'),
+    pygame.image.load('images/left_run/left_run_8.png')
 ]
 player_animation_count = 0
 
 swap_background = 0
-
 #Текст
-mlabel = pygame.font.Font(image_path + 'fonts/RuslanDisplay-Regular.ttf', 15)
+mlabel = pygame.font.Font('fonts/RuslanDisplay-Regular.ttf', 15)
 missles5_lable = mlabel.render('Осталось: 5 пуджей', True, 'White')
 missles4_lable = mlabel.render('Осталось: 4 пуджа', True, 'White')
 missles3_lable = mlabel.render('Осталось: 3 пуджа', True, 'White')
@@ -61,27 +54,13 @@ missles2_lable = mlabel.render('Осталось: 2 пуджа', True, 'White')
 missles1_lable = mlabel.render('Остался: 1 пудж', True, 'White')
 missles0_lable = mlabel.render('Остался: 0 пуджей', True, 'White')
 label = pygame.font.Font('fonts/RuslanDisplay-Regular.ttf', 30)
-lose_label = label.render(image_path + 'Ты проиграл, бооо(((', True, 'Black')
+lose_label = label.render('Ты проиграл, бооо(((', True, 'Black')
 restart_label = label.render('Начать заново', True, 'White', 'Red')
 restart_label_rect = restart_label.get_rect(topleft=(97, 175))
 
 #Мелодии
-#bg_song = pygame.mixer.Sound(image_path + 'songs/bg_song.mp3')
-#bg_play = False
-mem_song = pygame.mixer.Sound(image_path + 'songs/songmem.mp3')
+mem_song = pygame.mixer.Sound('songs/songmem.mp3')
 mem_song.play()
-
-#def play_bg_music():
-#    global bg_play
-#    if not bg_play:
-#        bg_song.play()
-#        bg_play = True
-
-#def play_mem_music():
-#    global mem_play
-#    if not mem_play:
-#        mem_song.play()
-#        mem_play = True
 
 #Движение
 player_speed = 5
@@ -92,17 +71,16 @@ is_jump = False
 jump_counter = 7
 
 gameplay = True
-#eye_x = 454 #мб лишнее
-running_program = True
-while running_program:
+
+running_programm = True
+while running_programm:
+
 
     screen.blit(background, (swap_background, 0))
     screen.blit(background, (swap_background + 450, 0))
     if gameplay:
-        #play_bg_music()
-        #mem_song = False
         player_rect = walk_left[0].get_rect(topleft=(player_x, player_y))
-        #eye_rect = eye.get_rect(topleft=(eye_x, 225)) #мб лишнее
+        # eye_rect = eye.get_rect(topleft=(eye_x, 225)) #мб лишнее
         if eye_list:
             for (i, el) in enumerate(eye_list):
                 screen.blit(eye, el)
@@ -129,9 +107,9 @@ while running_program:
         else:
             if jump_counter >= -7:
                 if jump_counter > 0:
-                    player_y -= (jump_counter ** 2) / 1.5
+                    player_y -= (jump_counter ** 2) / 2
                 else:
-                    player_y += (jump_counter ** 2) / 1.5
+                    player_y += (jump_counter ** 2) / 2
                 jump_counter -= 1
             else:
                 is_jump = False
@@ -163,11 +141,9 @@ while running_program:
         elif missles_left == 0:
             missles_left = 0
             screen.blit(missles0_lable, (0, 3))
-
-
         if missles:
             for (i, el) in enumerate(missles):
-                screen.blit(missle_pudge,(el.x, el.y))
+                screen.blit(missle_pudge, (el.x, el.y))
                 el.x += 4
                 if el.x > 475:
                     missles.pop(i)
@@ -175,11 +151,9 @@ while running_program:
                     for (index, eye_el) in enumerate(eye_list):
                         if el.colliderect(eye_el):
                             eye_list.pop(index)
-                            missles.pop(i)
-
 
     else:
-        screen.blit(blackmem, (0, 0))
+
         screen.blit(lose_label, (65, 145))
         screen.blit(restart_label, restart_label_rect)
         mouse = pygame.mouse.get_pos()
@@ -189,7 +163,6 @@ while running_program:
             eye_list.clear()
             missles.clear()
             missles_left = 5
-
 
     pygame.display.update()
 
